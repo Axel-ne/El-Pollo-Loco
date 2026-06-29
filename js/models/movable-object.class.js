@@ -1,6 +1,6 @@
-export default class MovableObject {
-    x;
-    y;
+export class MovableObject {
+    x = 120;
+    y = 400;
     img;
 
     moveRight() {
