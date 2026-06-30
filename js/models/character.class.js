@@ -1,17 +1,9 @@
 import { MovableObject } from "./movable-object.class.js";
 
 export class Character extends MovableObject {
-
-    moveRight() {
-
+    constructor() {
+        super().loadImage('img/2_character_pepe/2_walk/W-21.png');
     }
 
-    moveLeft(){
-        
-    }
-
-    jump() {
-
-    }
-
+    jump() {}
 }
