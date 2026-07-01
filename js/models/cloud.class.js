@@ -2,11 +2,10 @@ import { MovableObject } from "./movable-object.class.js";
 
 export class Cloud extends MovableObject {
     y = 20;
-    height =250;
+    height = 250;
     width = 500;
 
-
-constructor() {
+    constructor() {
         super();
         this.loadImage("img/5_background/layers/4_clouds/1.png");
 
@@ -14,9 +13,13 @@ constructor() {
         this.animate();
     }
 
-    animate(){
+    animate() {
+        this.moveLeft();
+    }
+
+    moveLeft() {
         setInterval(() => {
-            this.x -= 0.15;
-        }, 1000/ 60);
+            this.x -= this.speed;
+        }, 1000 / 60);
     }
 }
