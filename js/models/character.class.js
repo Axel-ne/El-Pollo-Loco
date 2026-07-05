@@ -2,7 +2,7 @@ import { MovableObject } from "./movable-object.class.js";
 
 export class Character extends MovableObject {
     height = 280;
-    y = 80;
+    y = 145;
     speed = 10;
     imgWalk = [
         "img/2_character_pepe/2_walk/W-21.png",
@@ -13,8 +13,17 @@ export class Character extends MovableObject {
         "img/2_character_pepe/2_walk/W-26.png",
     ];
 
-imgJump = [];
-
+    imgJump = [
+        "img/2_character_pepe/3_jump/J-31.png",
+        "img/2_character_pepe/3_jump/J-32.png",
+        "img/2_character_pepe/3_jump/J-33.png",
+        "img/2_character_pepe/3_jump/J-34.png",
+        "img/2_character_pepe/3_jump/J-35.png",
+        "img/2_character_pepe/3_jump/J-36.png",
+        "img/2_character_pepe/3_jump/J-37.png",
+        "img/2_character_pepe/3_jump/J-38.png",
+        "img/2_character_pepe/3_jump/J-39.png",
+    ];
 
     world;
 
@@ -22,6 +31,7 @@ imgJump = [];
         super().loadImage("img/2_character_pepe/2_walk/W-21.png");
 
         this.loadImages(this.imgWalk);
+        this.loadImages(this.imgJump);
         this.applyGravity();
         this.animate();
     }
@@ -40,15 +50,21 @@ imgJump = [];
                 this.x -= this.speed;
                 this.otherDirection = true;
             }
+
+            if (this.world.keyboard.up) {
+                this.speedY = 20;
+            }
+
             this.world.cameraX = -this.x + 100;
         }, 1000 / 60);
 
         setInterval(() => {
-            if (this.world.keyboard.right || this.world.keyboard.left) {
-                let i = this.currentImage % this.imgWalk.length;
-                let path = this.imgWalk[i];
-                this.img = this.imageChache[path];
-                this.currentImage++;
+            if (this.isAboveGround()) {
+                this.playAnimation(this.imgJump);
+            } else {
+                if (this.world.keyboard.right || this.world.keyboard.left) {
+                    this.playAnimation(this.imgWalk);
+                }
             }
         }, 50);
     }
