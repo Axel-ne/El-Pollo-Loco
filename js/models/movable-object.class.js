@@ -20,7 +20,7 @@ export class MovableObject {
         }, 1000 / 25);
     }
 
-    isAboveGround(){
+    isAboveGround() {
         return this.y < 145;
     }
 
@@ -38,18 +38,22 @@ export class MovableObject {
     }
 
     moveRight() {
-        console.log("Moving right");
+        this.x += this.speed;
+        this.otherDirection = false;
     }
 
     moveLeft() {
-        setInterval(() => {
-            this.x -= this.speed;
-        }, 1000 / 60);
+        this.x -= this.speed;
+        this.otherDirection = true;
+    }
+
+    jump() {
+        this.speedY = 30;
     }
 
     playAnimation(images) {
         let i = this.currentImage % this.imgWalk.length;
-        let path = this.imgWalk[i];
+        let path = images[i];
         this.img = this.imageChache[path];
         this.currentImage++;
     }

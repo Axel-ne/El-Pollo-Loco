@@ -10,7 +10,7 @@ export class Character extends MovableObject {
         "img/2_character_pepe/2_walk/W-23.png",
         "img/2_character_pepe/2_walk/W-24.png",
         "img/2_character_pepe/2_walk/W-25.png",
-        "img/2_character_pepe/2_walk/W-26.png",
+        "img/2_character_pepe/2_walk/W-26.png"
     ];
 
     imgJump = [
@@ -23,6 +23,7 @@ export class Character extends MovableObject {
         "img/2_character_pepe/3_jump/J-37.png",
         "img/2_character_pepe/3_jump/J-38.png",
         "img/2_character_pepe/3_jump/J-39.png",
+
     ];
 
     world;
@@ -38,21 +39,16 @@ export class Character extends MovableObject {
 
     animate() {
         setInterval(() => {
-            if (
-                this.world.keyboard.right &&
-                this.x < this.world.level.levelEndX
-            ) {
-                this.x += this.speed;
-                this.otherDirection = false;
+            if (this.world.keyboard.right && this.x < this.world.level.levelEndX){
+                this.moveRight();
             }
 
             if (this.world.keyboard.left && this.x > 0) {
-                this.x -= this.speed;
-                this.otherDirection = true;
+                this.moveLeft();
             }
 
-            if (this.world.keyboard.up) {
-                this.speedY = 20;
+            if (this.world.keyboard.space && !this.isAboveGround()) {
+                this.jump();
             }
 
             this.world.cameraX = -this.x + 100;
@@ -69,5 +65,7 @@ export class Character extends MovableObject {
         }, 50);
     }
 
-    jump() {}
+    jump(){
+        this.speedY = 30;
+    }
 }
