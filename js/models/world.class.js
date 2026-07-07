@@ -34,7 +34,7 @@ export class World {
         setInterval(() => {
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isColiding(enemy)) {
-                    this.character.energy -= 5;
+                    this.character.hit();
                     console.log('colision with character, energy', this.character.energy);
                     
                 }

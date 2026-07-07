@@ -1,5 +1,3 @@
-
-
 export class MovableObject {
     x = 120;
     y = 280;
@@ -47,11 +45,24 @@ export class MovableObject {
         }
     }
 
-    isColiding(mo){
-        return this.x + this.width > mo.x &&
-        this.y + this.height > mo.y &&
-        this.x < mo.x &&
-        this.y < mo.y + mo.height
+    isColiding(mo) {
+        return (
+            this.x + this.width > mo.x &&
+            this.y + this.height > mo.y &&
+            this.x < mo.x &&
+            this.y < mo.y + mo.height
+        );
+    }
+
+    hit() {
+        this.energy -= 5;
+        if (this.energy < 0) {
+            this.energy = 0;
+        }
+    }
+
+    isDead(){
+        
     }
 
     loadImages(arr) {
