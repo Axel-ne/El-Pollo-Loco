@@ -1,11 +1,5 @@
-export class MovableObject {
-    x = 120;
-    y = 280;
-    img;
-    height = 150;
-    width = 100;
-    imageChache = {};
-    currentImage = 0;
+import { DrawableObject } from "./drawable-object.class.js"
+export class MovableObject extends DrawableObject {
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
@@ -25,15 +19,6 @@ export class MovableObject {
 
     isAboveGround() {
         return this.y < 145;
-    }
-
-    loadImage(path) {
-        this.img = new Image();
-        this.img.src = path;
-    }
-
-    draw(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
     drawFrame(ctx) {
@@ -72,14 +57,6 @@ export class MovableObject {
 
     isDead(){
         return this.energy === 0;
-    }
-
-    loadImages(arr) {
-        arr.forEach((path) => {
-            let img = new Image();
-            img.src = path;
-            this.imageChache[path] = img;
-        });
     }
 
     moveRight() {
