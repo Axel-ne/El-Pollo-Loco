@@ -13,6 +13,7 @@ export class MovableObject {
     speedY = 0;
     acceleration = 2.5;
     showFrame = false;
+    energy = 100;
 
     applyGravity() {
         setInterval(() => {
