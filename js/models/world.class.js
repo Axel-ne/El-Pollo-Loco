@@ -6,7 +6,6 @@ import { level1 } from "../levels/level1.js";
 
 export class World {
     character = new Character();
-    level = level1;
     enemies = level1.enemies;
 
     clouds = level1.clouds;
@@ -17,17 +16,30 @@ export class World {
     ctx;
     keyboard;
     cameraX = 0;
-    constructor(canvas, keyboard) {
+    constructor(canvas, keyboard, level) {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.draw();
+        this.level = level;
         this.setWorld();
+        this.draw();
+        this.checkCollisions();
     }
 
     setWorld() {
         this.character.world = this;
     }
+
+    checkCollisions() {
+        setInterval(() => {
+            this.level.enemies.forEach((enemy) => {
+                if (this.character.isColiding(enemy)) {
+                    console.log('colision with character', enemy);
+                    
+                }
+            });
+        }, 1000);
+    } 
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -61,7 +73,6 @@ export class World {
         mo.draw(this.ctx);
         mo.drawFrame(this.ctx);
 
-        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
         if (mo.otherDirection) {
             this.flipImageBack(mo);
         }

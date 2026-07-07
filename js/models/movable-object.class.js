@@ -1,3 +1,5 @@
+
+
 export class MovableObject {
     x = 120;
     y = 280;
@@ -10,6 +12,7 @@ export class MovableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 2.5;
+    showFrame = false;
 
     applyGravity() {
         setInterval(() => {
@@ -33,12 +36,21 @@ export class MovableObject {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
-    drawFrame(ctx){
-        ctx.beginPath();
-        ctx.lineWidth = '5';
-        ctx.strokeStyle = 'blue';
-        ctx.rect(this.x, this.y, this.width, this.height);
-        ctx.stroke();
+    drawFrame(ctx) {
+        if (this.showFrame) {
+            ctx.beginPath();
+            ctx.lineWidth = "5";
+            ctx.strokeStyle = "blue";
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+        }
+    }
+
+    isColiding(mo){
+        return this.x + this.width > mo.x &&
+        this.y + this.height > mo.y &&
+        this.x < mo.x &&
+        this.y < mo.y + mo.height
     }
 
     loadImages(arr) {
