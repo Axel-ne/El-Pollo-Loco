@@ -1,4 +1,4 @@
-import { DrawableObject } from "./drawable-object.class.js"
+import { DrawableObject } from "./drawable-object.class.js";
 export class MovableObject extends DrawableObject {
     speed = 0.15;
     otherDirection = false;
@@ -18,10 +18,11 @@ export class MovableObject extends DrawableObject {
     }
 
     isAboveGround() {
-        return this.y < 145;
+    if (this.alwaysAboveGround) {
+        return true;
     }
-
-    
+    return this.y < 145;
+}
 
     isColiding(mo) {
         return (
@@ -41,13 +42,13 @@ export class MovableObject extends DrawableObject {
         }
     }
 
-    isHurt(){
+    isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000;
         return timepassed < 1;
     }
 
-    isDead(){
+    isDead() {
         return this.energy === 0;
     }
 
