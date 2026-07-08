@@ -43,7 +43,10 @@ export class Character extends MovableObject {
     ];
 
     world;
-
+rX;
+rY;
+rW;
+rH;
     constructor() {
         super().loadImage("img/2_character_pepe/2_walk/W-21.png");
 
@@ -51,9 +54,18 @@ export class Character extends MovableObject {
         this.loadImages(this.imgJump);
         this.loadImages(this.imgDead);
         this.loadImages(this.imgHurt);
+        this.getRealFrame()
         this.applyGravity();
         this.animate();
     }
+
+    offset = {
+        top: 90,
+        right: 15 ,
+        bottom: 15,
+        left: 15
+    }
+
 
     animate() {
         setInterval(() => {

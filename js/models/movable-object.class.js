@@ -8,6 +8,24 @@ export class MovableObject extends DrawableObject {
     energy = 100;
     lastHit = 0;
 
+    constructor() {
+        super();
+    }
+
+    offset = {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+    };
+
+    getRealFrame() {
+        this.rX = this.x + this.offset.left;
+        this.rY = this.y + this.offset.top;
+        this.rW = this.width - this.offset.left - this.offset.right;
+        this.rH = this.height - this.offset.top - this.offset.bottom;
+    }
+
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -18,11 +36,11 @@ export class MovableObject extends DrawableObject {
     }
 
     isAboveGround() {
-    if (this.alwaysAboveGround) {
-        return true;
+        if (this.alwaysAboveGround) {
+            return true;
+        }
+        return this.y < 145;
     }
-    return this.y < 145;
-}
 
     isColiding(mo) {
         return (
