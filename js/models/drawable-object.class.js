@@ -23,4 +23,16 @@ export class DrawableObject {
             this.imageChache[path] = img;
         });
     }
+
+
+drawFrame(ctx) {
+        if (this.showFrame) {
+            ctx.beginPath();
+            ctx.lineWidth = "5";
+            ctx.strokeStyle = "blue";
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+        }
+    }
+
 }

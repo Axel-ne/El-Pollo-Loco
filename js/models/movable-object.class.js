@@ -21,15 +21,7 @@ export class MovableObject extends DrawableObject {
         return this.y < 145;
     }
 
-    drawFrame(ctx) {
-        if (this.showFrame) {
-            ctx.beginPath();
-            ctx.lineWidth = "5";
-            ctx.strokeStyle = "blue";
-            ctx.rect(this.x, this.y, this.width, this.height);
-            ctx.stroke();
-        }
-    }
+    
 
     isColiding(mo) {
         return (

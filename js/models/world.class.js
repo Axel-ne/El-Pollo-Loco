@@ -3,6 +3,7 @@ import { Chicken } from "./chicken.class.js";
 import { Cloud } from "./cloud.class.js";
 import { BackgroundObject } from "./background-object.class.js";
 import { level1 } from "../levels/level1.js";
+import { StatusBar } from "./status-bar.class.js";
 
 export class World {
     character = new Character();
@@ -16,6 +17,7 @@ export class World {
     ctx;
     keyboard;
     cameraX = 0;
+    statusBar = new StatusBar();
     constructor(canvas, keyboard, level) {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
@@ -35,19 +37,21 @@ export class World {
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isColiding(enemy)) {
                     this.character.hit();
-                    console.log('colision with character, energy', this.character.energy);
-                    
+                    this.statusBar.setPercentage(this.character.energy)
                 }
             });
         }, 1000);
-    } 
+    }
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.ctx.translate(this.cameraX, 0);
-
         this.addObjectsToMap(this.level.backgroundObjects);
+
+        this.ctx.translate(-this.cameraX, 0);
+        this.addToMap(this.statusBar);
+        this.ctx.translate(this.cameraX, 0);
 
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.clouds);
