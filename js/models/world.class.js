@@ -3,9 +3,10 @@ import { Chicken } from "./chicken.class.js";
 import { Cloud } from "./cloud.class.js";
 import { BackgroundObject } from "./background-object.class.js";
 import { level1 } from "../levels/level1.js";
-import { StatusBar } from "./status-bar.class.js";
+import { StatusBar } from "./helth-status-bar.class.js";
 import { ThrowableObject } from "./throwable-object.class.js";
 import { Coin } from "./cion.class.js";
+import { Bottle } from "./bottle.class.js";
 
 export class World {
     character = new Character();
@@ -79,6 +80,7 @@ checkThrowObjects() {
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottle);
 
         this.ctx.translate(-this.cameraX, 0);
 
