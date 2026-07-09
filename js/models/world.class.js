@@ -7,6 +7,8 @@ import { StatusBar } from "./helth-status-bar.class.js";
 import { ThrowableObject } from "./throwable-object.class.js";
 import { Coin } from "./cion.class.js";
 import { Bottle } from "./bottle.class.js";
+import { CoinStatusBar } from "./coin-status-bar.class.js";
+import { BottleStatusBar } from "./bottle-status-bar.class.js";
 
 export class World {
     character = new Character();
@@ -21,8 +23,9 @@ export class World {
     keyboard;
     cameraX = 0;
     statusBar = new StatusBar();
+    bottleStatusBar = new BottleStatusBar();
     throwableObjects = [];
-
+    coinStatusBar = new CoinStatusBar();
     constructor(canvas, keyboard, level) {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
@@ -41,20 +44,21 @@ export class World {
         setInterval(() => {
             this.checkCollision();
             this.checkThrowObjects();
+            this.checkCoinCollision();
         }, 200);
     }
 
-checkThrowObjects() {
-    if (this.keyboard.D) {
-        let bottle = new ThrowableObject(
-            this.character.x + 100,
-            this.character.y + 100
-        );
+    checkThrowObjects() {
+        if (this.keyboard.D) {
+            let bottle = new ThrowableObject(
+                this.character.x + 100,
+                this.character.y + 100,
+            );
 
-        this.throwableObjects.push(bottle);
-        this.keyboard.D = false;
+            this.throwableObjects.push(bottle);
+            this.keyboard.D = false;
+        }
     }
-}
 
     checkCollision() {
         this.level.enemies.forEach((enemy) => {
@@ -65,18 +69,32 @@ checkThrowObjects() {
         });
     }
 
+    checkCoinCollision() {
+        this.level.coins.forEach((coin, index) => {
+            if (this.character.isColiding(coin)) {
+                this.character.coins++;
+
+                this.level.coins.splice(index, 1);
+
+                this.coinStatusBar.setPercentage(this.character.coins * 20);
+            }
+        });
+    }
+
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.ctx.translate(this.cameraX, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
-
+        this.addObjectsToMap(this.level.clouds);
         this.ctx.translate(-this.cameraX, 0);
         this.addToMap(this.statusBar);
+        this.addToMap(this.coinStatusBar);
+        this.addToMap(this.bottleStatusBar);
         this.ctx.translate(this.cameraX, 0);
 
         this.addToMap(this.character);
-        this.addObjectsToMap(this.level.clouds);
+
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.level.coins);

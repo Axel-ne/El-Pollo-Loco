@@ -5,6 +5,7 @@ export class Character extends MovableObject {
     y = 145;
     speed = 10;
     showFrame = true;
+    coins = 0;
     imgWalk = [
         "img/2_character_pepe/2_walk/W-21.png",
         "img/2_character_pepe/2_walk/W-22.png",
