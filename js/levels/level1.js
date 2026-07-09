@@ -3,6 +3,7 @@ import { Chicken } from "../models/chicken.class.js";
 import { BackgroundObject } from "../models/background-object.class.js";
 import { Cloud } from "../models/cloud.class.js";
 import { Endboss } from "../models/endboss.class.js";
+import { Coin } from "../models/cion.class.js";
 
 export const level1 = new Level(
     [new Chicken(), new Chicken(), new Chicken(), new Endboss()],
@@ -68,5 +69,14 @@ export const level1 = new Level(
             "img/5_background/layers/1_first_layer/2.png",
             720 * 3,
         ),
+    ],
+    [
+        new Coin(200 , 20),
+        new Coin(200, 50),
+        new Coin(200, 80),
+        new Coin(200 , 110),
+        new Coin(200, 50),
+        new Coin(200 , 110),
+        new Coin(200 , 140),
     ],
 );

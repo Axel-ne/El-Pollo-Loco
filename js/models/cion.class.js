@@ -1,5 +1,4 @@
 import { MovableObject } from "./movable-object.class.js";
-
 export class Coin extends MovableObject {
     y = 370;
     width = 100;
@@ -14,18 +13,20 @@ export class Coin extends MovableObject {
 
     coinImg = ["img/8_coin/coin_1.png", "img/8_coin/coin_2.png"];
 
-    constructor() {
+    constructor(x, y) {
         super();
-        this.loadImage("img/8_coin/coin_1.png");
-        this.loadImage(this.coinImg);
+        this.loadImage(this.coinImg[0]);
+        this.loadImages(this.coinImg);
+
         this.x = x;
         this.y = y;
+
         this.animate();
     }
 
-    animate(){
+    animate() {
         setInterval(() => {
             this.playAnimation(this.coinImg);
-        }, 100)
+        }, 100);
     }
 }

@@ -5,6 +5,7 @@ import { BackgroundObject } from "./background-object.class.js";
 import { level1 } from "../levels/level1.js";
 import { StatusBar } from "./status-bar.class.js";
 import { ThrowableObject } from "./throwable-object.class.js";
+import { Coin } from "./cion.class.js";
 
 export class World {
     character = new Character();
@@ -77,6 +78,7 @@ checkThrowObjects() {
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
+        this.addObjectsToMap(this.level.coins);
 
         this.ctx.translate(-this.cameraX, 0);
 
