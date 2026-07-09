@@ -44,18 +44,25 @@ export class World {
         setInterval(() => {
             this.checkCollision();
             this.checkThrowObjects();
+            this.checkBottleCollision();
             this.checkCoinCollision();
         }, 200);
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D) {
+        if (this.keyboard.D && this.character.bottles > 0) {
             let bottle = new ThrowableObject(
                 this.character.x + 100,
                 this.character.y + 100,
             );
 
             this.throwableObjects.push(bottle);
+
+            this.character.bottles--;
+
+                this.bottleStatusBar.setPercentage(
+            this.character.bottles * 20);
+
             this.keyboard.D = false;
         }
     }
@@ -77,6 +84,18 @@ export class World {
                 this.level.coins.splice(index, 1);
 
                 this.coinStatusBar.setPercentage(this.character.coins * 20);
+            }
+        });
+    }
+
+    checkBottleCollision() {
+        this.level.bottle.forEach((bottle, index) => {
+            if (this.character.isColiding(bottle)) {
+                this.character.bottles++;
+
+                this.level.bottle.splice(index, 1);
+
+                this.bottleStatusBar.setPercentage(this.character.bottles * 20);
             }
         });
     }

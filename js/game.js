@@ -15,8 +15,8 @@ function init() {
     world = new World(canvas, keyboard, level1);
 
     window.world = world;
-    console.log("my name is", world.character);
-    console.log(world.enemies);
+    
+    
 }
 
 window.onload = init;
@@ -25,8 +25,6 @@ window.addEventListener("keydown", (e) => {
     if(e.keyCode === 39){
         keyboard.right = true;
     }
-
-    console.log(e);
 
     if(e.keyCode === 37){
         keyboard.left = true;
@@ -54,8 +52,6 @@ window.addEventListener("keyup", (e) => {
     if(e.keyCode === 39){
         keyboard.right = false;
     }
-
-    console.log(e);
 
     if(e.keyCode === 37){
         keyboard.left = false;
