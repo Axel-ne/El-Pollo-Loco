@@ -1,4 +1,5 @@
 import { DrawableObject } from "./drawable-object.class.js";
+// import { ThrowableObject } from "./throwable-object.class.js";
 export class MovableObject extends DrawableObject {
     speed = 0.15;
     otherDirection = false;
@@ -7,7 +8,7 @@ export class MovableObject extends DrawableObject {
     showFrame = false;
     energy = 100;
     lastHit = 0;
-
+    alwaysAboveGround = false;
     constructor() {
         super();
     }
@@ -39,6 +40,11 @@ export class MovableObject extends DrawableObject {
         if (this.alwaysAboveGround) {
             return true;
         }
+
+        if (this.groundY) {
+            return this.y < this.groundY;
+        }
+
         return this.y < 145;
     }
 

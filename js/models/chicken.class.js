@@ -22,6 +22,14 @@ export class Chicken extends MovableObject {
         this.animate();
     }
 
+    die() {
+    this.loadImage("img/3_enemies_chicken/chicken_normal/2_dead/dead.png");
+
+    setTimeout(() => {
+        this.dead = true;
+    }, 500);
+}
+
     animate() {
         setInterval(() => {
             this.moveLeft();

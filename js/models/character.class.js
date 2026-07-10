@@ -64,7 +64,7 @@ rH;
     offset = {
         top: 90,
         right: 15 ,
-        bottom: 15,
+        bottom: 10,
         left: 15
     }
 

@@ -2,6 +2,7 @@ import { Character } from "./character.class.js";
 import { Chicken } from "./chicken.class.js";
 import { Cloud } from "./cloud.class.js";
 import { BackgroundObject } from "./background-object.class.js";
+import { Endboss } from "./endboss.class.js";
 import { level1 } from "../levels/level1.js";
 import { StatusBar } from "./helth-status-bar.class.js";
 import { ThrowableObject } from "./throwable-object.class.js";
@@ -42,6 +43,7 @@ export class World {
 
     run() {
         setInterval(() => {
+            this.checkChickenCollision();
             this.checkCollision();
             this.checkThrowObjects();
             this.checkBottleCollision();
@@ -99,6 +101,27 @@ export class World {
             }
         });
     }
+
+checkChickenCollision() {
+    this.level.enemies.forEach((enemy, index) => {
+
+        if (enemy.constructor.name === "Chicken" && this.character.isColiding(enemy)) {
+
+            if (this.character.speedY < 0) {
+
+                enemy.die();
+
+                setTimeout(() => {
+                    // this.level.enemies.splice(index, 1);
+                }, 500);
+
+            } else {
+                this.character.hit();
+                this.statusBar.setPercentage(this.character.energy);
+            }
+        }
+    });
+}
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
