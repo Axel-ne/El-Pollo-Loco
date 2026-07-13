@@ -49,6 +49,9 @@ export class MovableObject extends DrawableObject {
     }
 
     isColiding(mo) {
+        if (!mo) {
+            return false;
+        }
         return (
             this.x + this.width > mo.x &&
             this.y + this.height > mo.y &&

@@ -123,7 +123,7 @@ export class Character extends MovableObject {
                 this.playAnimation(this.imgJump);
             } else if (this.world.keyboard.right || this.world.keyboard.left) {
                 this.playAnimation(this.imgWalk);
-            } else if (this.isIdle()) {
+            } else{
                 this.playAnimation(this.imgIdle);
             }
         }, 50);

@@ -14,7 +14,7 @@ import { BottleStatusBar } from "./bottle-status-bar.class.js";
 export class World {
     character = new Character();
     enemies = level1.enemies;
-
+    endboss;
     clouds = level1.clouds;
 
     backgroundObjects = level1.backgroundObjects;
@@ -32,6 +32,7 @@ export class World {
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.level = level;
+        this.endboss = new Endboss();
         this.setWorld();
         this.draw();
         this.run();
@@ -49,6 +50,7 @@ export class World {
             this.checkBottleCollision();
             this.checkCoinCollision();
             this.checkBottleHitsChicken();
+            this.checkBottleHitsEndboss();
         }, 200);
     }
 
@@ -77,6 +79,12 @@ export class World {
                 this.statusBar.setPercentage(this.character.energy);
             }
         });
+
+        if (this.character.isColiding(this.endboss) && !this.endboss.dead) {
+            this.character.hit();
+
+            this.statusBar.setPercentage(this.character.energy);
+        }
     }
 
     checkCoinCollision() {
@@ -143,32 +151,52 @@ export class World {
         });
     }
 
+    checkBottleHitsEndboss() {
+
+    if (!this.endboss) return;
+
+    this.throwableObjects.forEach((bottle, bottleIndex) => {
+
+        if (bottle.isColiding(this.endboss)) {
+
+            this.endboss.hit(20);
+
+            this.throwableObjects.splice(bottleIndex, 1);
+        }
+
+    });
+}
+
     draw() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.ctx.translate(this.cameraX, 0);
-        this.addObjectsToMap(this.level.backgroundObjects);
-        this.addObjectsToMap(this.level.clouds);
-        this.ctx.translate(-this.cameraX, 0);
-        this.addToMap(this.statusBar);
-        this.addToMap(this.coinStatusBar);
-        this.addToMap(this.bottleStatusBar);
-        this.ctx.translate(this.cameraX, 0);
+    // Welt mit Kamera
+    this.ctx.translate(this.cameraX, 0);
 
-        this.addToMap(this.character);
+    this.addObjectsToMap(this.level.backgroundObjects);
+    this.addObjectsToMap(this.level.clouds);
 
-        this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.throwableObjects);
-        this.addObjectsToMap(this.level.coins);
-        this.addObjectsToMap(this.level.bottle);
+    this.addToMap(this.character);
 
-        this.ctx.translate(-this.cameraX, 0);
+    this.addObjectsToMap(this.level.enemies);
 
-        let self = this;
-        requestAnimationFrame(function () {
-            self.draw();
-        });
-    }
+    this.addToMap(this.endboss);
+
+    this.addObjectsToMap(this.throwableObjects);
+    this.addObjectsToMap(this.level.coins);
+    this.addObjectsToMap(this.level.bottle);
+
+    this.ctx.translate(-this.cameraX, 0);
+
+    this.addToMap(this.statusBar);
+    this.addToMap(this.coinStatusBar);
+    this.addToMap(this.bottleStatusBar);
+
+    let self = this;
+    requestAnimationFrame(function () {
+        self.draw();
+    });
+}
 
     addObjectsToMap(objects) {
         objects.forEach((o) => {
