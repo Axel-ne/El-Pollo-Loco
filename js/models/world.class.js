@@ -169,29 +169,19 @@ export class World {
 
     draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-    // Welt mit Kamera
     this.ctx.translate(this.cameraX, 0);
-
     this.addObjectsToMap(this.level.backgroundObjects);
     this.addObjectsToMap(this.level.clouds);
-
     this.addToMap(this.character);
-
     this.addObjectsToMap(this.level.enemies);
-
     this.addToMap(this.endboss);
-
     this.addObjectsToMap(this.throwableObjects);
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.bottle);
-
     this.ctx.translate(-this.cameraX, 0);
-
     this.addToMap(this.statusBar);
     this.addToMap(this.coinStatusBar);
     this.addToMap(this.bottleStatusBar);
-
     let self = this;
     requestAnimationFrame(function () {
         self.draw();

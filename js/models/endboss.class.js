@@ -5,6 +5,7 @@ export class Endboss extends MovableObject {
     width = 250;
     y = 60;
     health = 100;
+    hurt = false;
     dead = false;
     speed = 2;
     attackDamage = 20;
@@ -20,6 +21,12 @@ export class Endboss extends MovableObject {
         "img/4_enemie_boss_chicken/2_alert/G12.png",
     ];
 
+    imgHurt = [
+        "img/4_enemie_boss_chicken/4_hurt/G21.png",
+        "img/4_enemie_boss_chicken/4_hurt/G22.png",
+        "img/4_enemie_boss_chicken/4_hurt/G23.png",
+    ];
+
     imgDie = [
         "img/4_enemie_boss_chicken/5_dead/G24.png",
         "img/4_enemie_boss_chicken/5_dead/G25.png",
@@ -30,21 +37,27 @@ export class Endboss extends MovableObject {
         super().loadImage(this.imgWalk[0]);
         this.loadImages(this.imgWalk);
         this.loadImages(this.imgDie);
+        this.loadImages(this.imgHurt);
         this.x = 2200;
         this.animate();
     }
 
     hit(damage = 20) {
-        console.log("Boss getroffen");
 
-        this.health -= damage;
+    if (this.dead) return;
 
-        console.log("Boss HP:", this.health);
+    this.health -= damage;
 
-        if (this.health <= 0) {
-            this.die();
-        }
+    this.hurt = true;
+
+    setTimeout(() => {
+        this.hurt = false;
+    }, 300);
+
+    if (this.health <= 0) {
+        this.die();
     }
+}
 
     die() {
         if (this.dead) return;
@@ -58,10 +71,18 @@ export class Endboss extends MovableObject {
         }, 600);
     }
     animate() {
-        this.animationInterval = setInterval(() => {
-            if (!this.dead) {
-                this.playAnimation(this.imgWalk);
-            }
-        }, 200);
-    }
+    this.animationInterval = setInterval(() => {
+
+        if (this.dead) {
+            this.playAnimation(this.imgDie);
+
+        } else if (this.hurt) {
+            this.playAnimation(this.imgHurt);
+
+        } else {
+            this.playAnimation(this.imgWalk);
+        }
+
+    }, 200);
+}
 }
