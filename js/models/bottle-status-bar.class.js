@@ -25,7 +25,7 @@ export class BottleStatusBar extends MovableObject {
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.bottleStatusBarImg[this.resolveImgIndex()];
-        this.img = this.imageChache[path];
+        this.img = this.imageCache[path];
     }
 
     resolveImgIndex() {

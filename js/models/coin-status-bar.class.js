@@ -25,7 +25,7 @@ export class CoinStatusBar extends MovableObject {
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.coinStatusBarImg[this.resolveImgIndex()];
-        this.img = this.imageChache[path];
+        this.img = this.imageCache[path];
     }
 
     resolveImgIndex() {

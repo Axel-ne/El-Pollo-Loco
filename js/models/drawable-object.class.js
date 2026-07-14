@@ -1,6 +1,6 @@
 export class DrawableObject {
     img;
-    imageChache = {};
+    imageCache = {};
     x = 120;
     y = 280;
     height = 150;
@@ -16,24 +16,22 @@ export class DrawableObject {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
-        loadImages(arr) {
+    loadImages(arr) {
         arr.forEach((path) => {
             let img = new Image();
             img.src = path;
-            this.imageChache[path] = img;
+            this.imageCache[path] = img;
         });
     }
 
-
-drawFrame(ctx) {
+    drawFrame(ctx) {
         if (this.showFrame) {
             this.getRealFrame();
-        ctx.beginPath();
-        ctx.linewidth = '5';
-        ctx.strokeStyle = 'blue';
-        ctx.rect(this.rX, this.rY, this.rW, this.rH);
-        ctx.stroke();
+            ctx.beginPath();
+            ctx.linewidth = '5';
+            ctx.strokeStyle = 'blue';
+            ctx.rect(this.rX, this.rY, this.rW, this.rH);
+            ctx.stroke();
         }
     }
-
 }

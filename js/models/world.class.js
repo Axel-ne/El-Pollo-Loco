@@ -10,6 +10,7 @@ import { Coin } from "./cion.class.js";
 import { Bottle } from "./bottle.class.js";
 import { CoinStatusBar } from "./coin-status-bar.class.js";
 import { BottleStatusBar } from "./bottle-status-bar.class.js";
+import { EndbossStatusbar } from "./endboss-status-bar.class.js";
 
 export class World {
     character = new Character();
@@ -27,6 +28,7 @@ export class World {
     bottleStatusBar = new BottleStatusBar();
     throwableObjects = [];
     coinStatusBar = new CoinStatusBar();
+    endbossStatusbar = new EndbossStatusbar();
     constructor(canvas, keyboard, level) {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
@@ -181,6 +183,7 @@ export class World {
         this.addToMap(this.statusBar);
         this.addToMap(this.coinStatusBar);
         this.addToMap(this.bottleStatusBar);
+        this.addToMap(this.endbossStatusbar);
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
