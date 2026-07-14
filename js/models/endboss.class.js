@@ -7,8 +7,11 @@ export class Endboss extends MovableObject {
     health = 100;
     hurt = false;
     dead = false;
+    alert = false;
+    alertPlayed = false;
     speed = 2;
     attackDamage = 20;
+    showFrame = true; 
 
     imgWalk = [
         "img/4_enemie_boss_chicken/2_alert/G5.png",
@@ -43,21 +46,20 @@ export class Endboss extends MovableObject {
     }
 
     hit(damage = 20) {
+        if (this.dead) return;
 
-    if (this.dead) return;
+        this.health -= damage;
 
-    this.health -= damage;
+        this.hurt = true;
 
-    this.hurt = true;
+        setTimeout(() => {
+            this.hurt = false;
+        }, 300);
 
-    setTimeout(() => {
-        this.hurt = false;
-    }, 300);
-
-    if (this.health <= 0) {
-        this.die();
+        if (this.health <= 0) {
+            this.die();
+        }
     }
-}
 
     die() {
         if (this.dead) return;
@@ -70,19 +72,27 @@ export class Endboss extends MovableObject {
             this.dead = true;
         }, 600);
     }
+
+    startAlert() {
+        if (this.alertPlayed) return;
+
+        this.alertPlayed = true;
+        this.alert = true;
+
+        setTimeout(() => {
+            this.alert = false;
+        }, 1600);
+    }
+
     animate() {
-    this.animationInterval = setInterval(() => {
-
-        if (this.dead) {
-            this.playAnimation(this.imgDie);
-
-        } else if (this.hurt) {
-            this.playAnimation(this.imgHurt);
-
-        } else {
-            this.playAnimation(this.imgWalk);
-        }
-
-    }, 200);
-}
+        this.animationInterval = setInterval(() => {
+            if (this.dead) {
+                this.playAnimation(this.imgDie);
+            } else if (this.hurt) {
+                this.playAnimation(this.imgHurt);
+            } else {
+                this.playAnimation(this.imgWalk);
+            }
+        }, 200);
+    }
 }

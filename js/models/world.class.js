@@ -47,11 +47,14 @@ export class World {
             this.checkChickenCollision();
             this.checkCollision();
             this.checkThrowObjects();
-            this.checkBottleCollision();
-            this.checkCoinCollision();
+
             this.checkBottleHitsChicken();
             this.checkBottleHitsEndboss();
         }, 200);
+        setInterval(() => {
+            this.checkBottleCollision();
+            this.checkCoinCollision();
+        }, 1000 / 60);
     }
 
     checkThrowObjects() {
@@ -152,41 +155,37 @@ export class World {
     }
 
     checkBottleHitsEndboss() {
+        if (!this.endboss) return;
 
-    if (!this.endboss) return;
+        this.throwableObjects.forEach((bottle, bottleIndex) => {
+            if (bottle.isColiding(this.endboss)) {
+                this.endboss.hit(20);
 
-    this.throwableObjects.forEach((bottle, bottleIndex) => {
-
-        if (bottle.isColiding(this.endboss)) {
-
-            this.endboss.hit(20);
-
-            this.throwableObjects.splice(bottleIndex, 1);
-        }
-
-    });
-}
+                this.throwableObjects.splice(bottleIndex, 1);
+            }
+        });
+    }
 
     draw() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.ctx.translate(this.cameraX, 0);
-    this.addObjectsToMap(this.level.backgroundObjects);
-    this.addObjectsToMap(this.level.clouds);
-    this.addToMap(this.character);
-    this.addObjectsToMap(this.level.enemies);
-    this.addToMap(this.endboss);
-    this.addObjectsToMap(this.throwableObjects);
-    this.addObjectsToMap(this.level.coins);
-    this.addObjectsToMap(this.level.bottle);
-    this.ctx.translate(-this.cameraX, 0);
-    this.addToMap(this.statusBar);
-    this.addToMap(this.coinStatusBar);
-    this.addToMap(this.bottleStatusBar);
-    let self = this;
-    requestAnimationFrame(function () {
-        self.draw();
-    });
-}
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.translate(this.cameraX, 0);
+        this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.clouds);
+        this.addToMap(this.character);
+        this.addObjectsToMap(this.level.enemies);
+        this.addToMap(this.endboss);
+        this.addObjectsToMap(this.throwableObjects);
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottle);
+        this.ctx.translate(-this.cameraX, 0);
+        this.addToMap(this.statusBar);
+        this.addToMap(this.coinStatusBar);
+        this.addToMap(this.bottleStatusBar);
+        let self = this;
+        requestAnimationFrame(function () {
+            self.draw();
+        });
+    }
 
     addObjectsToMap(objects) {
         objects.forEach((o) => {
