@@ -29,6 +29,8 @@ export class World {
     throwableObjects = [];
     coinStatusBar = new CoinStatusBar();
     endbossStatusbar = new EndbossStatusbar();
+
+    
     constructor(canvas, keyboard, level) {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
@@ -79,7 +81,7 @@ export class World {
 
     checkCollision() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColiding(enemy)) {
+            if (this.character.isColiding(enemy) && enemy.isDead()) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
             }
@@ -119,6 +121,9 @@ export class World {
     checkChickenCollision() {
         this.level.enemies.forEach((enemy, index) => {
             if (enemy instanceof Chicken && this.character.isColiding(enemy)) {
+                if (this.character < 145) {
+                    this.character.y = 145;
+                }
                 if (this.character.speedY < 0) {
                     enemy.die();
                     this.character.speedY = 20;
@@ -150,23 +155,19 @@ export class World {
         });
     }
 
-checkBottleHitsEndboss() {
-    if (!this.endboss) return;
+    checkBottleHitsEndboss() {
+        if (!this.endboss) return;
 
-    this.throwableObjects.forEach((bottle, bottleIndex) => {
-        if (bottle.isColiding(this.endboss)) {
+        this.throwableObjects.forEach((bottle, bottleIndex) => {
+            if (bottle.isColiding(this.endboss)) {
+                this.endboss.hit(20);
 
+                this.endbossStatusbar.setPercentage(this.endboss.health);
 
-
-            this.endboss.hit(20);
-
-
-            this.endbossStatusbar.setPercentage(this.endboss.health);
-
-            this.throwableObjects.splice(bottleIndex, 1);
-        }
-    });
-}
+                this.throwableObjects.splice(bottleIndex, 1);
+            }
+        });
+    }
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
