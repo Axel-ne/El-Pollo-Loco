@@ -30,7 +30,7 @@ export class EndbossStatusbar extends DrawableObject {
         this.percentage = percentage;
 
         let path = this.endbossStatusbarImg[this.resolveImgIndex()];
-        this.img = this.imageCache[path];
+        this.img = this.imageCache[path]
     }
 
     resolveImgIndex() {

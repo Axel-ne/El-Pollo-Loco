@@ -119,20 +119,14 @@ export class World {
     checkChickenCollision() {
         this.level.enemies.forEach((enemy, index) => {
             if (enemy instanceof Chicken && this.character.isColiding(enemy)) {
-                if (
-                    this.character.speedY < 0 &&
-                    this.character.y + this.character.height < enemy.y + 30
-                ) {
+                if (this.character.speedY < 0) {
                     enemy.die();
-
                     this.character.speedY = 20;
-
                     setTimeout(() => {
                         this.level.enemies.splice(index, 1);
                     }, 500);
                 } else {
                     this.character.hit();
-                    this.statusBar.setPercentage(this.character.energy);
                 }
             }
         });
@@ -156,17 +150,23 @@ export class World {
         });
     }
 
-    checkBottleHitsEndboss() {
-        if (!this.endboss) return;
+checkBottleHitsEndboss() {
+    if (!this.endboss) return;
 
-        this.throwableObjects.forEach((bottle, bottleIndex) => {
-            if (bottle.isColiding(this.endboss)) {
-                this.endboss.hit(20);
+    this.throwableObjects.forEach((bottle, bottleIndex) => {
+        if (bottle.isColiding(this.endboss)) {
 
-                this.throwableObjects.splice(bottleIndex, 1);
-            }
-        });
-    }
+
+
+            this.endboss.hit(20);
+
+
+            this.endbossStatusbar.setPercentage(this.endboss.health);
+
+            this.throwableObjects.splice(bottleIndex, 1);
+        }
+    });
+}
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
