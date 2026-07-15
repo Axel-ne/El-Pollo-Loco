@@ -11,6 +11,7 @@ import { Bottle } from "./bottle.class.js";
 import { CoinStatusBar } from "./coin-status-bar.class.js";
 import { BottleStatusBar } from "./bottle-status-bar.class.js";
 import { EndbossStatusbar } from "./endboss-status-bar.class.js";
+import { SmallChicken } from "./smal-chicken.class.js";
 
 export class World {
     character = new Character();

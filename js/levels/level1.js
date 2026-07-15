@@ -5,9 +5,12 @@ import { Cloud } from "../models/cloud.class.js";
 import { Endboss } from "../models/endboss.class.js";
 import { Coin } from "../models/cion.class.js";
 import { Bottle } from "../models/bottle.class.js";
+import { SmallChicken } from "../models/smal-chicken.class.js";
 
 export const level1 = new Level(
-    [new Chicken(), new Chicken(), new Chicken(),],
+    [new Chicken(), new Chicken(), new Chicken(),
+        new SmallChicken()
+    ],
 
 
     [new Cloud()],
