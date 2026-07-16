@@ -20,6 +20,53 @@ h1{
     text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
 }
 
+#startScreen {
+    position: relative;
+    width: 720px;
+}
+
+#startScreen img {
+    width: 100%;
+    display: block;
+}
+
+.buttons {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+}
+
+button {
+    padding: 12px 24px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
 canvas {
     border-radius: 16px;
+}
+
+.hidden {
+    display: none;
+}
+
+#controls {
+    position: absolute;
+    background: transparent;
+    color: white;
+    padding: 20px;
+}
+
+dialog {
+    border: none;
+    border-radius: 12px;
+    padding: 24px;
+    font-family: 'zabras', sans-serif;
+}
+
+dialog::backdrop {
+    background: rgba(0,0,0,.6);
 }
